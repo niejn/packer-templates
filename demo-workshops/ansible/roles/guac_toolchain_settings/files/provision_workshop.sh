@@ -98,6 +98,13 @@ function PREPARE_PROD {
 }
 
 function PREPARE_LOWER {
+	echo "Checking that Jenkins is running on tooling"
+	until ssh -t centos@delphix-tcw-tooling-oracle "systemctl is-active --quiet jenkins"; do
+		echo "Starting Jenkins on tooling"
+		ssh -t centos@delphix-tcw-tooling-oracle "sudo systemctl start jenkins"
+		sleep 5
+	done
+	
 	ssh -t centos@tooling /var/lib/jenkins/app_repo.git/hooks/post-update
 	[[ ${PIPESTATUS[0]} -ne 0 ]] && ERROR
 
