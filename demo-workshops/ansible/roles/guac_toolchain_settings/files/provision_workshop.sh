@@ -99,9 +99,9 @@ function PREPARE_PROD {
 
 function PREPARE_LOWER {
 	echo "Checking that Jenkins is running on tooling"
-	until ssh -t centos@delphix-tcw-tooling-oracle "systemctl is-active --quiet jenkins"; do
+	until ssh -t centos@tooling "systemctl is-active --quiet jenkins"; do
 		echo "Starting Jenkins on tooling"
-		ssh -t centos@delphix-tcw-tooling-oracle "sudo systemctl start jenkins"
+		ssh -t centos@tooling "sudo systemctl start jenkins"
 		sleep 5
 	done
 	
